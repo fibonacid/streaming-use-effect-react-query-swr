@@ -1,11 +1,59 @@
 /* eslint-disable no-constant-condition */
 import { ReactNode, useState } from "react";
-import { useCompletion } from "./lib/useCompletion";
+import { useCompletion as useCompletionCustom } from "./lib/custom";
+
+function CustomHookSection() {
+  const [mutate, { data, isLoading }] = useCompletionCustom();
+  return (
+    <Section
+      title="Custom Hook"
+      form={
+        <Form
+          onSubmit={(prompt) => {
+            void mutate(prompt);
+          }}
+        />
+      }
+      result={isLoading ? "Loading..." : data ?? ""}
+    />
+  );
+}
+
+function SWRHookSection() {
+  const [mutate, { data, isLoading }] = useCompletionCustom();
+  return (
+    <Section
+      title="SWR Hook"
+      form={
+        <Form
+          onSubmit={(prompt) => {
+            void mutate(prompt);
+          }}
+        />
+      }
+      result={isLoading ? "Loading..." : data ?? ""}
+    />
+  );
+}
+
+function ReactQuerySection() {
+  const [mutate, { data, isLoading }] = useCompletionCustom();
+  return (
+    <Section
+      title="React Query Hook"
+      form={
+        <Form
+          onSubmit={(prompt) => {
+            void mutate(prompt);
+          }}
+        />
+      }
+      result={isLoading ? "Loading..." : data ?? ""}
+    />
+  );
+}
 
 function App() {
-  const [mutate, { data, isLoading }] = useCompletion();
-  const result = data.length ? data : isLoading ? "Loading..." : "";
-
   return (
     <main className="m-4">
       <div className="mb-4">
@@ -19,41 +67,11 @@ function App() {
         </p>
       </div>
       <div className="divider" />
-      <Section
-        title="Custom Hook"
-        form={
-          <Form
-            onSubmit={(prompt) => {
-              void mutate(prompt);
-            }}
-          />
-        }
-        result={result}
-      />
+      <CustomHookSection />
       <div className="divider" />
-      <Section
-        title="React Query Hook"
-        form={
-          <Form
-            onSubmit={(prompt) => {
-              void mutate(prompt);
-            }}
-          />
-        }
-        result={result}
-      />
+      <SWRHookSection />
       <div className="divider" />
-      <Section
-        title="SWR Hook"
-        form={
-          <Form
-            onSubmit={(prompt) => {
-              void mutate(prompt);
-            }}
-          />
-        }
-        result={result}
-      />
+      <ReactQuerySection />
     </main>
   );
 }
