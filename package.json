@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "daisyui": "^3.1.10",
     "dalai": "^0.3.1",
     "express": "^4.18.2",
     "react": "^18.2.0",

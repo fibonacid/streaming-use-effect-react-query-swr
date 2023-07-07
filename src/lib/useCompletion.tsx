@@ -9,6 +9,7 @@ export function useCompletion(signal?: AbortSignal) {
   const mutate = useCallback(
     async (prompt: string) => {
       setIsLoading(true);
+      setTokens([]);
       try {
         await getCompletion(
           prompt,
