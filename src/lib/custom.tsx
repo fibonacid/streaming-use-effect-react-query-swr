@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { getCompletion } from "./shared";
 
-export function useCompletion(signal?: AbortSignal) {
+export function useCompletionCustom(signal?: AbortSignal) {
   const [tokens, setTokens] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();

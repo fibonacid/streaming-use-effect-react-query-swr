@@ -1,6 +1,32 @@
 /* eslint-disable no-constant-condition */
 import { ReactNode, useState } from "react";
-import { useCompletion as useCompletionCustom } from "./lib/custom";
+import { useCompletionCustom } from "./lib/custom";
+import useCompletionSWR from "./lib/swr";
+
+function App() {
+  return (
+    <main className="m-4">
+      <div className="mb-4">
+        <h1 className="text-xl font-bold mb-4">Autocomplete</h1>
+        <p>
+          This app is here to demonstrate three different ways to consume
+          streaming responses in React.
+        </p>
+        <p>
+          The completions come from a local server that uses the LLama model
+        </p>
+      </div>
+      <div className="divider" />
+      <CustomHookSection />
+      <div className="divider" />
+      <SWRHookSection />
+      <div className="divider" />
+      <ReactQuerySection />
+    </main>
+  );
+}
+
+export default App;
 
 function CustomHookSection() {
   const [mutate, { data, isLoading }] = useCompletionCustom();
@@ -20,7 +46,7 @@ function CustomHookSection() {
 }
 
 function SWRHookSection() {
-  const [mutate, { data, isLoading }] = useCompletionCustom();
+  const [mutate, { data, isLoading }] = useCompletionSWR();
   return (
     <Section
       title="SWR Hook"
@@ -52,31 +78,6 @@ function ReactQuerySection() {
     />
   );
 }
-
-function App() {
-  return (
-    <main className="m-4">
-      <div className="mb-4">
-        <h1 className="text-xl font-bold mb-4">Autocomplete</h1>
-        <p>
-          This app is here to demonstrate three different ways to consume
-          streaming responses in React.
-        </p>
-        <p>
-          The completions come from a local server that uses the LLama model
-        </p>
-      </div>
-      <div className="divider" />
-      <CustomHookSection />
-      <div className="divider" />
-      <SWRHookSection />
-      <div className="divider" />
-      <ReactQuerySection />
-    </main>
-  );
-}
-
-export default App;
 
 function Section({
   title,
