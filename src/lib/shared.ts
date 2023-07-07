@@ -24,6 +24,11 @@ export async function getCompletion(
     const chunk = decoder.decode(value);
     onNewToken(chunk);
     text += chunk;
+
+    if (signal?.aborted) {
+      await reader.cancel();
+      return;
+    }
   }
 
   return text;
