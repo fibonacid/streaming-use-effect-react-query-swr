@@ -1,45 +1,34 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { getCompletion } from "./shared";
 
-export function useCompletion(prompt: string) {
+export function useCompletion(signal?: AbortSignal) {
   const [tokens, setTokens] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const onNewToken = (token: string) => {
-      setTokens((tokens) => [...tokens, token]);
-    };
-
-    setIsLoading(true);
-    getCompletion(prompt, onNewToken, signal)
-      .then((res) => {
-        setError(null);
-        setIsLoading(false);
-        console.log("Done", res);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        if (signal.aborted) {
+  const mutate = useCallback(
+    async (prompt: string) => {
+      setIsLoading(true);
+      try {
+        await getCompletion(
+          prompt,
+          (token) => {
+            setTokens((tokens) => [...tokens, token]);
+          },
+          signal
+        );
+      } catch (err) {
+        if (signal?.aborted) {
           console.log("Aborted");
         } else {
           setError(err);
         }
-      });
+      }
+      setIsLoading(false);
+    },
+    [signal]
+  );
 
-    return () => {
-      controller.abort();
-    };
-  }, [prompt]);
-
-  const completion = tokens.join(" ");
-
-  return {
-    data: completion,
-    isLoading,
-    error,
-  };
+  const data = tokens.join("");
+  return [mutate, { data, isLoading, error }] as const;
 }
