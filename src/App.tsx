@@ -43,10 +43,10 @@ function CustomHookSection() {
         />
       }
       result={
-        isLoading
-          ? "Loading..."
-          : data
+        data
           ? data
+          : isLoading
+          ? "Loading..."
           : errorMessage(error, "Error fetching completions")
       }
     />
@@ -54,7 +54,7 @@ function CustomHookSection() {
 }
 
 function SWRHookSection() {
-  const [mutate, { data, isLoading }] = useCompletionSWR();
+  const [mutate, { data, isLoading, error }] = useCompletionSWR();
   return (
     <Section
       title="SWR Hook"
@@ -65,13 +65,19 @@ function SWRHookSection() {
           }}
         />
       }
-      result={isLoading ? "Loading..." : data ?? ""}
+      result={
+        data
+          ? data
+          : isLoading
+          ? "Loading..."
+          : errorMessage(error, "Error fetching completions")
+      }
     />
   );
 }
 
 function ReactQuerySection() {
-  const [mutate, { data, isLoading }] = useCompletionCustom();
+  const [mutate, { data, isLoading, error }] = useCompletionCustom();
   return (
     <Section
       title="React Query Hook"
@@ -82,7 +88,13 @@ function ReactQuerySection() {
           }}
         />
       }
-      result={isLoading ? "Loading..." : data ?? ""}
+      result={
+        data
+          ? data
+          : isLoading
+          ? "Loading..."
+          : errorMessage(error, "Error fetching completions")
+      }
     />
   );
 }

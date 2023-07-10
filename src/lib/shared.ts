@@ -1,8 +1,4 @@
-export async function getCompletion(
-  prompt: string,
-  onNewToken: (token: string) => void,
-  signal?: AbortSignal
-) {
+export async function* getCompletion(prompt: string, signal?: AbortSignal) {
   const url = new URL("/completion", "http://localhost:4000");
   url.searchParams.append("prompt", prompt);
 
@@ -16,22 +12,18 @@ export async function getCompletion(
   const decoder = new TextDecoder();
 
   let i = 0;
-  let text = "";
   while (i < 1000) {
     i++;
     const { done, value } = await reader.read();
     if (done) return;
-    const chunk = decoder.decode(value);
-    onNewToken(chunk);
-    text += chunk;
+    const token = decoder.decode(value);
+    yield token;
 
     if (signal?.aborted) {
       await reader.cancel();
       return;
     }
   }
-
-  return text;
 }
 
 export const errorMessage = (err: unknown, fallback?: string) => {

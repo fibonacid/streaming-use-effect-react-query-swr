@@ -12,10 +12,10 @@ export default function useCompletionSWR() {
     unknown,
     [string, string],
     string
-  >(["completion", id], (_, { arg: prompt }) => {
-    void getCompletion(prompt, (token) => {
+  >(["completion", id], async (_, { arg: prompt }) => {
+    for await (const token of getCompletion(prompt)) {
       void mutate((prev) => (prev ? prev + token : token), false);
-    });
+    }
   });
 
   return [trigger, { data, error, isLoading: isMutating }] as const;
