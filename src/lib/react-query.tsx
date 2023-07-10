@@ -26,7 +26,10 @@ export function useCompletionReactQuery() {
       const signal = controller.signal;
       setAbortController(controller);
 
-      for await (const token of getCompletion(prompt, signal)) {
+      for await (const token of getCompletion(
+        prompt,
+        signal,
+      )) {
         queryClient.setQueryData<string>(
           ["completion", id],
           (prev) => (prev ? prev + token : token),

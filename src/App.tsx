@@ -15,14 +15,16 @@ function App() {
   return (
     <main className="m-4">
       <div className="mb-4">
-        <h1 className="text-xl font-bold mb-4">Autocomplete</h1>
+        <h1 className="text-xl font-bold mb-4">
+          Autocomplete
+        </h1>
         <p>
-          This app is here to demonstrate three different ways to
-          consume streaming responses in React.
+          This app is here to demonstrate three different
+          ways to consume streaming responses in React.
         </p>
         <p>
-          The completions come from a local server that uses the LLama
-          model
+          The completions come from a local server that uses
+          the LLama model
         </p>
       </div>
       <div className="divider" />
@@ -40,7 +42,8 @@ function App() {
 export default App;
 
 function CustomHookSection() {
-  const [mutate, { data, isLoading, error }] = useCompletionCustom();
+  const [mutate, { data, isLoading, error }] =
+    useCompletionCustom();
 
   return (
     <Section
@@ -57,14 +60,18 @@ function CustomHookSection() {
           ? data
           : isLoading
           ? "Loading..."
-          : errorMessage(error, "Error fetching completions")
+          : errorMessage(
+              error,
+              "Error fetching completions",
+            )
       }
     />
   );
 }
 
 function SWRHookSection() {
-  const [mutate, { data, isLoading, error }] = useCompletionSWR();
+  const [mutate, { data, isLoading, error }] =
+    useCompletionSWR();
   return (
     <Section
       title="SWR Hook"
@@ -80,7 +87,10 @@ function SWRHookSection() {
           ? data
           : isLoading
           ? "Loading..."
-          : errorMessage(error, "Error fetching completions")
+          : errorMessage(
+              error,
+              "Error fetching completions",
+            )
       }
     />
   );
@@ -104,7 +114,10 @@ function ReactQuerySection() {
           ? data
           : isLoading
           ? "Loading..."
-          : errorMessage(error, "Error fetching completions")
+          : errorMessage(
+              error,
+              "Error fetching completions",
+            )
       }
     />
   );
@@ -132,7 +145,11 @@ function Section({
   );
 }
 
-function Form({ onSubmit }: { onSubmit: (prompt: string) => void }) {
+function Form({
+  onSubmit,
+}: {
+  onSubmit: (prompt: string) => void;
+}) {
   const [prompt, setPrompt] = useState("");
   return (
     <form
@@ -156,7 +173,10 @@ function Form({ onSubmit }: { onSubmit: (prompt: string) => void }) {
         />
       </div>
       <div className="form-control w-full max-w-xs">
-        <button className="btn btn-accent btn-" type="submit">
+        <button
+          className="btn btn-accent btn-"
+          type="submit"
+        >
           Submit
         </button>
       </div>

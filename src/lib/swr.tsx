@@ -5,7 +5,10 @@ import { getCompletion } from "./shared";
 
 export default function useCompletionSWR() {
   const id = useId();
-  const { data, mutate } = useSWR<string>(["completion", id], null);
+  const { data, mutate } = useSWR<string>(
+    ["completion", id],
+    null,
+  );
   const [abortController, setAbortController] =
     useState<AbortController | null>();
 
@@ -23,11 +26,20 @@ export default function useCompletionSWR() {
     const signal = controller.signal;
     setAbortController(controller);
 
-    for await (const token of getCompletion(prompt, signal)) {
-      void mutate((prev) => (prev ? prev + token : token), false);
+    for await (const token of getCompletion(
+      prompt,
+      signal,
+    )) {
+      void mutate(
+        (prev) => (prev ? prev + token : token),
+        false,
+      );
     }
     setAbortController(null);
   });
 
-  return [trigger, { data, error, isLoading: isMutating }] as const;
+  return [
+    trigger,
+    { data, error, isLoading: isMutating },
+  ] as const;
 }

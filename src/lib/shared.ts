@@ -2,7 +2,10 @@ export async function* getCompletion(
   prompt: string,
   signal?: AbortSignal,
 ) {
-  const url = new URL("/completion", "http://localhost:4000");
+  const url = new URL(
+    "/completion",
+    "http://localhost:4000",
+  );
   url.searchParams.append("prompt", prompt);
 
   const res = await fetch(url, {
@@ -29,7 +32,10 @@ export async function* getCompletion(
   }
 }
 
-export const errorMessage = (err: unknown, fallback?: string) => {
+export const errorMessage = (
+  err: unknown,
+  fallback?: string,
+) => {
   if (err instanceof Error) {
     return err.message;
   }

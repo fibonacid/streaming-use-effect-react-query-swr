@@ -21,12 +21,18 @@ export function useCompletionCustom() {
       setAbortController(controller);
 
       try {
-        for await (const token of getCompletion(prompt, signal)) {
+        for await (const token of getCompletion(
+          prompt,
+          signal,
+        )) {
           console.log("token", token);
           setTokens((prev) => [...prev, token]);
         }
       } catch (err) {
-        if (err instanceof Error && err.name === "AbortError") {
+        if (
+          err instanceof Error &&
+          err.name === "AbortError"
+        ) {
           return; // abort errors are expected
         }
         setError(err);
