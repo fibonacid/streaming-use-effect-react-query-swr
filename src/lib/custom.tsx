@@ -19,7 +19,7 @@ export function useCompletionCustom(signal?: AbortSignal) {
           signal
         );
       } catch (err) {
-        if (signal?.aborted) {
+        if (err instanceof Error && err.name === "AbortError") {
           console.log("Aborted");
         } else {
           setError(err);

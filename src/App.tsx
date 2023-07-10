@@ -2,6 +2,7 @@
 import { ReactNode, useState } from "react";
 import { useCompletionCustom } from "./lib/custom";
 import useCompletionSWR from "./lib/swr";
+import { errorMessage } from "./lib/shared";
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
 export default App;
 
 function CustomHookSection() {
-  const [mutate, { data, isLoading }] = useCompletionCustom();
+  const [mutate, { data, isLoading, error }] = useCompletionCustom();
+
   return (
     <Section
       title="Custom Hook"
@@ -40,7 +42,13 @@ function CustomHookSection() {
           }}
         />
       }
-      result={isLoading ? "Loading..." : data ?? ""}
+      result={
+        isLoading
+          ? "Loading..."
+          : data
+          ? data
+          : errorMessage(error, "Error fetching completions")
+      }
     />
   );
 }

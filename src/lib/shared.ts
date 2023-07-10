@@ -33,3 +33,10 @@ export async function getCompletion(
 
   return text;
 }
+
+export const errorMessage = (err: unknown, fallback?: string) => {
+  if (err instanceof Error) {
+    return err.message;
+  }
+  return fallback || "Unknown error";
+};
