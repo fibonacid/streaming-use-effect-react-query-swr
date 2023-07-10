@@ -23,6 +23,7 @@ app.get("/completion", async (req, res) => {
       prompt,
       model: "llama.13B",
       n_predict: 50,
+      threads: 1,
     },
     (token) => {
       process.stdout.write(token);
