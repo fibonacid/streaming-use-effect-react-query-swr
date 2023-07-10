@@ -1,4 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useId, useState } from "react";
 import { getCompletion } from "./shared";
 
@@ -23,8 +27,9 @@ export function useCompletionReactQuery() {
       setAbortController(controller);
 
       for await (const token of getCompletion(prompt, signal)) {
-        queryClient.setQueryData<string>(["completion", id], (prev) =>
-          prev ? prev + token : token
+        queryClient.setQueryData<string>(
+          ["completion", id],
+          (prev) => (prev ? prev + token : token),
         );
       }
       setAbortController(null);

@@ -34,7 +34,7 @@ export function useCompletionCustom() {
       setIsLoading(false);
       setAbortController(null);
     },
-    [abortController]
+    [abortController],
   );
 
   const data = tokens.join("");

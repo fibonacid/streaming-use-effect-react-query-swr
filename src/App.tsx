@@ -4,7 +4,10 @@ import { useCompletionCustom } from "./lib/custom";
 import useCompletionSWR from "./lib/swr";
 import { errorMessage } from "./lib/shared";
 import { useCompletionReactQuery } from "./lib/react-query";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
 
@@ -14,11 +17,12 @@ function App() {
       <div className="mb-4">
         <h1 className="text-xl font-bold mb-4">Autocomplete</h1>
         <p>
-          This app is here to demonstrate three different ways to consume
-          streaming responses in React.
+          This app is here to demonstrate three different ways to
+          consume streaming responses in React.
         </p>
         <p>
-          The completions come from a local server that uses the LLama model
+          The completions come from a local server that uses the LLama
+          model
         </p>
       </div>
       <div className="divider" />
@@ -83,7 +87,8 @@ function SWRHookSection() {
 }
 
 function ReactQuerySection() {
-  const [mutate, { data, isLoading, error }] = useCompletionReactQuery();
+  const [mutate, { data, isLoading, error }] =
+    useCompletionReactQuery();
   return (
     <Section
       title="React Query Hook"

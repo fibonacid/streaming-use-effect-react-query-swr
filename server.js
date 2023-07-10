@@ -8,7 +8,7 @@ const app = express();
 app.use(
   cors({
     origin: "*",
-  })
+  }),
 );
 
 app.get("/completion", async (req, res) => {
@@ -28,7 +28,7 @@ app.get("/completion", async (req, res) => {
     (token) => {
       process.stdout.write(token);
       res.write(token);
-    }
+    },
   );
   res.end();
 });
