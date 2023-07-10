@@ -11,6 +11,7 @@
     "server": "node server.js"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.29.19",
     "cors": "^2.8.5",
     "daisyui": "^3.1.10",
     "dalai": "^0.3.1",

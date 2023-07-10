@@ -3,6 +3,10 @@ import { ReactNode, useState } from "react";
 import { useCompletionCustom } from "./lib/custom";
 import useCompletionSWR from "./lib/swr";
 import { errorMessage } from "./lib/shared";
+import { useCompletionReactQuery } from "./lib/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -22,7 +26,9 @@ function App() {
       <div className="divider" />
       <SWRHookSection />
       <div className="divider" />
-      <ReactQuerySection />
+      <QueryClientProvider client={queryClient}>
+        <ReactQuerySection />
+      </QueryClientProvider>
     </main>
   );
 }
@@ -77,7 +83,7 @@ function SWRHookSection() {
 }
 
 function ReactQuerySection() {
-  const [mutate, { data, isLoading, error }] = useCompletionCustom();
+  const [mutate, { data, isLoading, error }] = useCompletionReactQuery();
   return (
     <Section
       title="React Query Hook"
