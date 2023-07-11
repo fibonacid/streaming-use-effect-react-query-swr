@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "concurrently \"yarn vite --port 3000\" \"yarn server\"",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --port 3000",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.19",
+    "concurrently": "^8.2.0",
     "cors": "^2.8.5",
     "daisyui": "^3.1.10",
     "dalai": "^0.3.1",
